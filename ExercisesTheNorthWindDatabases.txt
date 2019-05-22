@@ -1,69 +1,101 @@
 ﻿Exercises 
 1. Retrieve all columns in the Region table 
-Select * from region;
+
+  Select * from region;
+
 2. Select the FirstName and LastName columns from the Employees table. 
-Select first_name, last_name from employees;
+
+  Select first_name, last_name from employees;
+
 3. Select the FirstName and LastName columns from the Employees table. 
 Sort by LastName. 
-Select first_name, last_name from employees
-Order by last_name;
+
+  Select first_name, last_name from employees
+  Order by last_name;
+
 4. Create a report showing Northwind's orders sorted by Freight from most expensive to cheapest. Show OrderID, OrderDate, ShippedDate, CustomerID, and Freight. 
-select order_id, order_date, shipped_date, customer_id, freight from orders
-order by freight desc;
+
+  select order_id, order_date, shipped_date, customer_id, freight from orders
+  order by freight desc;
+  
 5. Create a report showing the title and the first and last name of all sales representatives. 
-select title, first_name, last_name from employees where title='Sales Representative';
+
+  select title, first_name, last_name from employees where title='Sales Representative';
+  
 6. Create a report showing the first and last names of all employees who have a region specified. 
-select first_name, last_name from employees where region is not null;
+
+  select first_name, last_name from employees where region is not null;
+  
 7. Create a report showing the first and last name of all employees whose last names start with a letter in the last half of the alphabet. Sort by LastName in descending order. 
-select first_name, last_name from employees 
-where last_name >= 'M'
-order by last_name desc;
+
+  select first_name, last_name from employees 
+  where last_name >= 'M'
+  order by last_name desc;
+  
 8. Create a report showing the title of courtesy and the first and last name of all employees whose title of courtesy begins with "M". 
-select title_of_courtesy, first_name, last_name from employees
-where title_of_courtesy like 'M%';
+
+  select title_of_courtesy, first_name, last_name from employees
+  where title_of_courtesy like 'M%';
+
 9. Create a report showing the first and last name of all sales representatives who are from Seattle or Redmond. 
-select first_name, last_name from employees
-where title = 'Sales Representative' and
-(city = 'Seattle' or city = 'Redmond');
+
+  select first_name, last_name from employees
+  where title = 'Sales Representative' and
+  (city = 'Seattle' or city = 'Redmond');
+
 10. Create a report that shows the company name, contact title, city and country of all customers in Mexico or in any city in Spain except Madrid. 
-select company_name, contact_title, city, country from customers
-where country = 'Mexico' or (country = 'Spain' and city != 'Madrid');
+
+  select company_name, contact_title, city, country from customers
+  where country = 'Mexico' or (country = 'Spain' and city != 'Madrid');
+
 11. If the cost of freight is greater than or equal to $500.00, it will now be taxed by 10%. Create a report that shows the order id, freight cost, freight cost with this tax for all orders of $500 or more. 
-select order_id, freight as freight_cost, freight*1.1 as freight_cost_with_tax from orders
-where freight >= 500.00;
+
+  select order_id, freight as freight_cost, freight*1.1 as freight_cost_with_tax from orders
+  where freight >= 500.00;
+
 12. Find the Total Number of Units Ordered of Product ID 3 
-select sum(quantity) from order_details
-where product_id = 3;
+
+  select sum(quantity) from order_details
+  where product_id = 3;
+
 13. Retrieve the number of employees in each city 
-select city, count(*) from employees
-group by city;
+
+  select city, count(*) from employees
+  group by city;
+
 14. Find the number of sales representatives in each city that contains at least 2 sales representatives. Order by the number of employees. 
-select city, count(*) as num_employees from employees
-where title = 'Sales Representative'
-group by city
-having count(*)>=2
-order by num_employees;
+
+  select city, count(*) as num_employees from employees
+  where title = 'Sales Representative'
+  group by city
+  having count(*)>=2
+  order by num_employees;
+
 15. Find the Companies (the CompanyName) that placed orders in 1997 
-select customers.company_name from customers join orders on orders.customer_id = customers.customer_id
-where orders.order_date >= '1997-01-01' and orders.order_date <= '1997-12-31';
+
+  select customers.company_name from customers join orders on orders.customer_id = customers.customer_id
+  where orders.order_date >= '1997-01-01' and orders.order_date <= '1997-12-31';
+
 16. Create a report showing employee orders. 
-select employees.first_name, employees.last_name, orders.order_id from orders 
-join employees on orders.employee_id = employees.employee_id
-order by employees.last_name;
+
+  select employees.first_name, employees.last_name, orders.order_id from orders 
+  join employees on orders.employee_id = employees.employee_id
+  order by employees.last_name;
 
 
 17. Create a report showing the Order ID, the name of the company that placed the order, and the first and last name of the associated employee. Only show orders placed after January 1, 1998 that shipped after they were required. Sort by Company Name. 
 
 
-select orders.order_id, customers.company_name, employees.first_name, employees.last_name from orders 
-join employees on employees.employee_id = orders.employee_id
-join customers on customers.customer_id = orders.customer_id
-where order_date >= '1998-01-01' and orders.shipped_date > orders.required_date
-order by company_name;
+  select orders.order_id, customers.company_name, employees.first_name, employees.last_name from orders 
+  join employees on employees.employee_id = orders.employee_id
+  join customers on customers.customer_id = orders.customer_id
+  where order_date >= '1998-01-01' and orders.shipped_date > orders.required_date
+  order by company_name;
 
 
 18. Create a report that shows the total quantity of products (from the Order_Details table) ordered. Only show records for products for which the quantity ordered is fewer than 200. The report should return the following 5 rows. 
-select p.product_name, sum(o.quantity) as total_product_ordered from products as p
-join order_details as o on o.product_id = p.product_id
-group by product_name
-having sum(o.quantity) < 200;
+
+  select p.product_name, sum(o.quantity) as total_product_ordered from products as p
+  join order_details as o on o.product_id = p.product_id
+  group by product_name
+  having sum(o.quantity) < 200;
